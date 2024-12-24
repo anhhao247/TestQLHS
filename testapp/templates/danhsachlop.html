@@ -1,0 +1,72 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Nhap diem{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h4 class="mb-0">DANH SÁCH LỚP</h4>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Lớp:</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Sĩ số:</label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th width="5%">STT</th>
+                        <th width="30%">Họ tên</th>
+                        <th width="15%">Giới tính</th>
+                        <th width="20%">Năm sinh</th>
+                        <th width="30%">Địa chỉ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <select class="form-control">
+                                <option>Nam</option>
+                                <option>Nữ</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="form-control"></td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <select class="form-control">
+                                <option>Nam</option>
+                                <option>Nữ</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="form-control"></td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="text-center">
+                <button class="btn btn-success">Thêm học sinh</button>
+                <button class="btn btn-primary">Lưu danh sách</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

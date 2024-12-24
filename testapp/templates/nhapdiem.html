@@ -1,0 +1,122 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Nhap diem{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">NHẬP ĐIỂM HỌC SINH</h4>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Năm học:</label>
+                        <select class="form-control" id="academicYear">
+                            {% for i in namhoc %}
+                            <option>{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Học kỳ:</label>
+                        <select class="form-control" id="semester">
+                            {% for i in hk %}
+                            <option>{{ i.semester_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Lớp:</label>
+                        <select class="form-control" id="class">
+                            {% for i in lops %}
+                            <option>{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Môn học:</label>
+                        <select class="form-control" id="subject">
+                            {% for i in mh %}
+                            <option>{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gradeTable"></div>
+
+            <div class="text-center mt-3">
+                <button class="btn btn-info">Tính điểm TB</button>
+                <button class="btn btn-success">Lưu điểm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function loadGradeColumns(semester) {
+            // Sample column configurations
+            const columns = {
+                'HK1': [
+                    { type: '15p', count: 2 },
+                    { type: '1_tiet', count: 1 },
+                    { type: 'cuoi_ky', count: 1 }
+                ],
+                'HK2': [
+                    { type: '15p', count: 4 },
+                    { type: '1_tiet', count: 2 },
+                    { type: 'cuoi_ky', count: 1 }
+                ]
+            };
+
+            const selectedColumns = semester === 'HK1' ? columns.HK1 : columns.HK2;
+            renderGradeTable(selectedColumns);
+        }
+
+        function renderGradeTable(columns) {
+            let html = '<table class="table table-bordered"><thead><tr><th>STT</th><th>Họ tên</th>';
+
+            columns.forEach(col => {
+                for(let i = 1; i <= col.count; i++) {
+                    html += `<th>${col.type === '15p' ? 'Điểm 15p' :
+                           col.type === '1_tiet' ? 'Điểm 1 tiết' :
+                           'Điểm cuối kỳ'} ${col.count > 1 ? i : ''}</th>`;
+                }
+            });
+
+            html += '<th>Điểm TB</th></tr></thead><tbody>';
+
+            // Sample students
+            ['Nguyễn Văn A', 'Nguyễn Văn B'].forEach((student, idx) => {
+                html += `<tr><td>${idx + 1}</td><td>${student}</td>`;
+                columns.forEach(col => {
+                    for(let i = 1; i <= col.count; i++) {
+                        html += `<td><input type="number" step="0.1" min="0" max="10" class="form-control"></td>`;
+                    }
+                });
+                html += '<td><input type="number" class="form-control" readonly></td></tr>';
+            });
+
+            html += '</tbody></table>';
+            $('#gradeTable').html(html);
+        }
+
+        $('#semester').change(function() {
+            loadGradeColumns($(this).val() === 'Học kỳ 1' ? 'HK1' : 'HK2');
+        });
+
+        // Initial load
+        loadGradeColumns('HK1');
+    </script>
+</div>
+{% endblock %}
