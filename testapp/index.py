@@ -104,7 +104,7 @@ def nhapdiem():
 # Route để thêm học sinh mới
 @app.route('/tiep-nhan-hoc-sinh', methods=['GET', 'POST'])
 @login_required
-@admin_or_required(role=UserRole.TEACHER)
+@admin_or_required(role=UserRole.STAFF)
 def tiep_nhan_hoc_sinh():
     if request.method == 'POST':
         # Lấy thông tin từ form
